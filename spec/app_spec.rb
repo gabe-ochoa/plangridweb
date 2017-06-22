@@ -1,6 +1,7 @@
-require 'rspec'
+require 'spec_helper'
+require_relative '../app'
 
-RSpec.describe PlanGridWeb, type: :controllers do
+RSpec.describe PlanGridWeb::App, type: :controllers do
   include Rack::Test::Methods
 
   describe "An index endpoint '/' where" do
