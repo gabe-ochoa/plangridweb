@@ -1,6 +1,6 @@
 # PlanGrid Web Microservice
 
-This is a small microservice for PlanGrid
+This is a small Sinatra based microservice for PlanGrid
 
 ## Documentation / Specification
 
