@@ -1,8 +1,7 @@
-require 'sinatra'
-require 'json'
+require ::File.expand_path('../config/environment.rb',  __FILE__)
 
 module PlanGridWeb
-  class App
+  class App < Sinatra::Base
 
 
 
