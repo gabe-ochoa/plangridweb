@@ -8,7 +8,7 @@ RSpec.describe PlanGridWeb::App, type: :controllers do
 
     it 'GET returns a hello world paragraph' do
       get('/')
-      expect(last_response.code).to be 200
+      expect(last_response.status).to be 200
       expect(last_response.body).to eq('<p>Hello, World</p>')
     end
   end
