@@ -2,6 +2,7 @@ require ::File.expand_path('../config/environment.rb',  __FILE__)
 
 module PlanGridWeb
   class App < Sinatra::Base
+    use Rack::Logger
 
     # Hello World response
     get '/', provides: 'text/html' do
@@ -17,9 +18,13 @@ module PlanGridWeb
     post '/' do
       body = JSON.parse(request.body.read)
       if mode.eql?('true')
-        return [202, body['foo']]
+        value = body['foo']
+        return [202, value]
+        logger.info(value)
       elsif mode.eql?('false')
-        return [202, body['bar']]
+        value = body['bar']
+        return [202, value]
+        logger.info(value)
       elsif mode.nil?
         return [500, "The server mode needs to be set!"]
       else
@@ -28,6 +33,13 @@ module PlanGridWeb
     end
 
     private
+
+    # attr_reader :logger
+
+    def logger
+      @logger = Logger.new(stdout)
+      @logger.level = Logger::INFO
+    end
 
     def mode
       ENV['SERVER_MODE']
