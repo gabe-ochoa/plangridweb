@@ -7,6 +7,7 @@ ENV['RACK_ENV'] = 'test'
 
 RSpec.configure do |config|
   include Rack::Test::Methods
+  # include Rack::Test::Session
 
   def app
     PlanGridWeb::App
