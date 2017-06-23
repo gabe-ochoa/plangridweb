@@ -45,7 +45,7 @@ status: 200
 
 body:
 
-`<p>Hello, World</p>`
+`{"message": "Good morning"}`
 
 Sample cURL:
 
