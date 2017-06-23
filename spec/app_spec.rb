@@ -18,7 +18,7 @@ RSpec.describe PlanGridWeb::App, type: :controllers do
       get '/'
 
       expect(last_response.status).to be 200
-      expect(last_response.body).to eq('{"message": "Good morning"}')
+      expect(last_response.body).to eq('{"message":"Good morning"}')
     end
   end
 end
