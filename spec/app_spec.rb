@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative '../app'
+require 'json'
 
 RSpec.describe PlanGridWeb::App, type: :controllers do
 
@@ -22,8 +23,8 @@ RSpec.describe PlanGridWeb::App, type: :controllers do
     end
 
     context "POST with a JSON body" do
-      let(:json_body) do
-        json_body = {
+      let(:test_body) do
+        test_body = {
           foo: 'value_foo',
           bar: 'value_bar'
           }.to_json
@@ -31,7 +32,7 @@ RSpec.describe PlanGridWeb::App, type: :controllers do
 
       it "when ENV['SERVER_MODE'] is 'true' return the value for the key 'foo'" do
         ENV['SERVER_MODE'] = 'true'
-        post '/', json_body
+        post '/', test_body
 
         expect(last_response.status).to be 202
         expect(last_response.body).to eq('value_foo')

@@ -4,13 +4,20 @@ module PlanGridWeb
   class App < Base
 
     # Hello World response
-    get'/', provides: 'text/html' do
+    get '/', provides: 'text/html' do
       return hello_world_response
     end
 
     # Good morning response
-    get'/', provides: 'application/json' do
+    get '/', provides: 'application/json' do
       return good_morning_response
+    end
+
+    post '/' do
+      if ENV['SERVER_MODE'].eql?('true')
+        body = JSON.parse(request.body.read)
+        return [202, body['foo']]
+      end
     end
 
     private
