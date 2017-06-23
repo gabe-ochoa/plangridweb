@@ -37,6 +37,22 @@ RSpec.describe PlanGridWeb::App, type: :controllers do
         expect(last_response.status).to be 202
         expect(last_response.body).to eq('value_foo')
       end
+
+      it "when ENV['SERVER_MODE'] is 'false' return the value for the key 'bar'" do
+        ENV['SERVER_MODE'] = 'false'
+        post '/', test_body
+
+        expect(last_response.status).to be 202
+        expect(last_response.body).to eq('value_bar')
+      end
+
+      it "when ENV['SERVER_MODE'] is not 'true' or 'false' let the client know the server is misconfigured" do
+        ENV['SERVER_MODE'] = 'bad mode'
+        post '/', test_body
+
+        expect(last_response.status).to be 500
+        expect(last_response.body).to eq("The server is misconfigured! Server mode 'bad mode' not supported")
+      end
     end
   end
 end

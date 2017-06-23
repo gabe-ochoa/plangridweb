@@ -13,14 +13,23 @@ module PlanGridWeb
       return good_morning_response
     end
 
+    # Check server mode
     post '/' do
-      if ENV['SERVER_MODE'].eql?('true')
-        body = JSON.parse(request.body.read)
+      body = JSON.parse(request.body.read)
+      if mode.eql?('true')
         return [202, body['foo']]
+      elsif mode.eql?('false')
+        return [202, body['bar']]
+      else
+        return [500, "The server is misconfigured! Server mode '#{mode}' not supported"]
       end
     end
 
     private
+
+    def mode
+      ENV['SERVER_MODE']
+    end
 
     def good_morning_response
       [200, { message: 'Good morning'}.to_json ]
