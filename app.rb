@@ -1,7 +1,7 @@
 require ::File.expand_path('../config/environment.rb',  __FILE__)
 
 module PlanGridWeb
-  class App < Base
+  class App < Sinatra::Base
 
     # Hello World response
     get '/', provides: 'text/html' do
@@ -20,6 +20,8 @@ module PlanGridWeb
         return [202, body['foo']]
       elsif mode.eql?('false')
         return [202, body['bar']]
+      elsif mode.nil?
+        return [500, "The server mode needs to be set!"]
       else
         return [500, "The server is misconfigured! Server mode '#{mode}' not supported"]
       end

@@ -4,6 +4,10 @@ require 'json'
 
 RSpec.describe PlanGridWeb::App, type: :controllers do
 
+  before(:each) do
+    ENV['SERVER_MODE'] = nil
+  end
+
   describe "An index endpoint '/' where" do
 
     it "GET with an accept header of 'text/html' returns a hello world paragraph" do
@@ -46,12 +50,19 @@ RSpec.describe PlanGridWeb::App, type: :controllers do
         expect(last_response.body).to eq('value_bar')
       end
 
-      it "when ENV['SERVER_MODE'] is not 'true' or 'false' let the client know the server is misconfigured" do
+      it "when ENV['SERVER_MODE'] is not 'true', 'false', or nil let the client know the server is misconfigured" do
         ENV['SERVER_MODE'] = 'bad mode'
         post '/', test_body
 
         expect(last_response.status).to be 500
         expect(last_response.body).to eq("The server is misconfigured! Server mode 'bad mode' not supported")
+      end
+
+      it "when ENV['SERVER_MODE'] is nil let the client know the server mode needs to be set" do
+        post '/', test_body
+
+        expect(last_response.status).to be 500
+        expect(last_response.body).to eq("The server mode needs to be set!")
       end
     end
   end
